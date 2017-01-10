@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>title</title>
+<script>
+function Node(value){
+	this.data=value;
+	this.next=null;
+	}
+Node.prototype.print = function(){
+	var value="";
+	//value+=JSON.stringify(this.data);
+	var color="blue";
+	if(this.data.status.includes("DONE")){color="lime";}
+	else if(this.data.status.includes("exploration")){color="red";}
+	var style="<span style=\"color:"+color+"\">";
+	value+="<b>"+this.data.number+"</b> - "+this.data.description+" - "+style+this.data.status+"</span>";
+	return value;
+}
+function List(){
+	this._length=0;
+	this.head=null;
+	}
+List.prototype.print = function(){
+	var value="";
+	value+="num elements: "+this._length;
+	value+="<br>";
+	var current = this.head;
+	if(this._length == 0 ){
+		value+="empty list<br>";
+		return value;
+	}else if(this._length == 1){
+		value+="list with one value<br>";
+		value+=current.print();
+		return value;
+	}
+	while(current){
+		value+=current.print();
+		value+="<br>";
+		current=current.next;
+		console.log("test");
+		}
+	return value;
+	}
+List.prototype.add = function(value){
+	var node = new Node(value);
+	//case: empty list
+	if(this._length == 0){
+		this.head=node;
+		this._length++;
+		console.log("test");
+	}
+	//case: nonempty list
+	else{
+		console.log("test2");
+		var current = this.head;
+		while(current.next){
+			current = current.next;
+		}
+		current.next = node;
+		this._length++;
+		console.log("test3");
+	}
+}
+</script>
+</head>
+<body>
+<p id="p1">P1</p>
+<div id="div1">DIV1</div>
+<div id="div2">DIV2</div>
+<script>
+var myList = new List();
+myList.add({number:"0",description:"VM",status:"building out test cases then adding error handling logic"});
+myList.add({number:"0",description:"MA",status:"Included as test plan with ticket_0"});
+myList.add({number:"0",description:"Excel",status:"QA Review"});
+myList.add({number:"0",description:"SA KC",status:"Solution exploration"});
+myList.add({number:"0",description:"CL",status:"Solution exploration"});
+myList.add({number:"0",description:"Wizard",status:"Solution exploration"});
+myList.add({number:"0",description:"fix filetype",status:"Solution exploration"});
+myList.add({number:"0",description:"U KC",status:"Passed QA testing/ DONE"});
+myList.add({number:"0",description:"VB",status:"Passed QA testing/ DONE"});
+document.getElementById("p1").innerHTML=myList.print();
+//TODO
+//0 - listbox to trim by highlight color (removes highlight color and re-colorizes alternating rows or something)
+//1 - (finish 0)
+//2 - portableNode AJAX finish following tutorial
+</script>
+<script>
+document.getElementById("div1").innerHTML="<button onclick=myList.add({number:\"0000\",description:\"DESCRIPTION\",status:\"STATUS\"})>add</button>";
+</script>
+<br>
+<button onclick=document.getElementById("p1").innerHTML=myList.print()>print</button>
+</body>
+</html>
